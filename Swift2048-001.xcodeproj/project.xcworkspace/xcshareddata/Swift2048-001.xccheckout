@@ -10,14 +10,14 @@
 	<string>Swift2048-001</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F93CAD5D8956A54B583CA51992DC1A68524FB416</key>
+		<key>D4E2DFCC42BCD30878E289220A434D85D7C0B0F6</key>
 		<string>github.com:gphxj/Swift2048</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>Swift2048-001.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F93CAD5D8956A54B583CA51992DC1A68524FB416</key>
+		<key>D4E2DFCC42BCD30878E289220A434D85D7C0B0F6</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F93CAD5D8956A54B583CA51992DC1A68524FB416</string>
+	<string>D4E2DFCC42BCD30878E289220A434D85D7C0B0F6</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F93CAD5D8956A54B583CA51992DC1A68524FB416</string>
+			<string>D4E2DFCC42BCD30878E289220A434D85D7C0B0F6</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Swift2048</string>
 		</dict>

@@ -49,6 +49,7 @@ class MainViewController:UIViewController
         super.viewDidLoad()
         setupBackground()
         setupButtons()
+        setupSwipeGuestures()
         
         for i in 0 ..< 16
         {
@@ -90,6 +91,49 @@ class MainViewController:UIViewController
             }
             x += padding + width
         }
+    }
+    
+    func setupSwipeGuestures()
+    {
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeUp"))
+        upSwipe.numberOfTouchesRequired = 1
+        upSwipe.direction = UISwipeGestureRecognizerDirection.Up
+        self.view.addGestureRecognizer(upSwipe)
+        
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeDown"))
+        upSwipe.numberOfTouchesRequired = 1
+        upSwipe.direction = UISwipeGestureRecognizerDirection.Down
+        self.view.addGestureRecognizer(downSwipe)
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeLeft"))
+        upSwipe.numberOfTouchesRequired = 1
+        upSwipe.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(leftSwipe)
+        
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeRight"))
+        upSwipe.numberOfTouchesRequired = 1
+        upSwipe.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(rightSwipe)
+    }
+    
+    func swipeUp()
+    {
+        println("swipeUp")
+    }
+    
+    func swipeDown()
+    {
+        println("swipeDown")
+    }
+    
+    func swipeLeft()
+    {
+        println("swipeLeft")
+    }
+    
+    func swipeRight()
+    {
+        println("swipeRight")
     }
     
     func resetTapped()

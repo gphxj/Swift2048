@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9A3218861A60FD9400CD024A /* ControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3218851A60FD9400CD024A /* ControlView.swift */; };
-		9A7E0DA21A60CFDD000438F2 /* 学习记录.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9A7E0DA11A60CFDD000438F2 /* 学习记录.txt */; };
+		9A3C5BE41A6180BF0015F4DF /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 9A3C5BE31A6180BF0015F4DF /* README.md */; };
 		FB1CAA7A1A5E6EC700B00210 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CAA791A5E6EC700B00210 /* AppDelegate.swift */; };
 		FB1CAA7C1A5E6EC700B00210 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1CAA7B1A5E6EC700B00210 /* ViewController.swift */; };
 		FB1CAA7F1A5E6EC700B00210 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB1CAA7D1A5E6EC700B00210 /* Main.storyboard */; };
@@ -34,7 +34,7 @@
 
 /* Begin PBXFileReference section */
 		9A3218851A60FD9400CD024A /* ControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlView.swift; sourceTree = "<group>"; };
-		9A7E0DA11A60CFDD000438F2 /* 学习记录.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "学习记录.txt"; sourceTree = "<group>"; };
+		9A3C5BE31A6180BF0015F4DF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FB1CAA741A5E6EC700B00210 /* Swift2048-001.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Swift2048-001.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB1CAA781A5E6EC700B00210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB1CAA791A5E6EC700B00210 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,7 +74,7 @@
 		FB1CAA6B1A5E6EC700B00210 = {
 			isa = PBXGroup;
 			children = (
-				9A7E0DA11A60CFDD000438F2 /* 学习记录.txt */,
+				9A3C5BE31A6180BF0015F4DF /* README.md */,
 				FB3D9FAB1A5F9A890001B2EB /* model */,
 				FB3D9FA81A5F88C90001B2EB /* view */,
 				FB5CBA351A5E76EC0096EDEE /* controller */,
@@ -240,7 +240,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB1CAA7F1A5E6EC700B00210 /* Main.storyboard in Resources */,
-				9A7E0DA21A60CFDD000438F2 /* 学习记录.txt in Resources */,
 				FB1CAA841A5E6EC700B00210 /* LaunchScreen.xib in Resources */,
 				FB1CAA811A5E6EC700B00210 /* Images.xcassets in Resources */,
 			);
@@ -266,6 +265,7 @@
 				FB5CBA321A5E76B30096EDEE /* MainTabViewController.swift in Sources */,
 				FB1CAA7C1A5E6EC700B00210 /* ViewController.swift in Sources */,
 				FB3D9FAA1A5F88F90001B2EB /* TileView.swift in Sources */,
+				9A3C5BE41A6180BF0015F4DF /* README.md in Sources */,
 				FB3D9FAD1A5F9AAD0001B2EB /* GameModel.swift in Sources */,
 				FB1CAA7A1A5E6EC700B00210 /* AppDelegate.swift in Sources */,
 			);
