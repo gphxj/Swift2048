@@ -27,8 +27,11 @@ class MainViewController:UIViewController
     var gmodel:GameModel
     
     //保存界面上的数字Label数据
-    var tiles:Dictionary<NSIndexPath, TileView>
-    //var tilevals:
+    var tiles: Dictionary<NSIndexPath, TileView>
+    
+    //保存实际数字值的一个字典
+    var tileVals: Dictionary<NSIndexPath, Int>
+    
     
     override init() {
         self.backgrounds = Array<UIView>()
@@ -36,6 +39,7 @@ class MainViewController:UIViewController
         var count = self.dimension * self.dimension
         //self.tiles = Array<TileView>(count:count, repeatedValue:0)
         self.tiles = Dictionary()
+        self.tileVals = Dictionary()
         
         self.gmodel = GameModel(dimension: self.dimension)
         super.init(nibName: nil, bundle: nil)
@@ -101,24 +105,50 @@ class MainViewController:UIViewController
         self.view.addGestureRecognizer(upSwipe)
         
         let downSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeDown"))
-        upSwipe.numberOfTouchesRequired = 1
-        upSwipe.direction = UISwipeGestureRecognizerDirection.Down
+        downSwipe.numberOfTouchesRequired = 1
+        downSwipe.direction = UISwipeGestureRecognizerDirection.Down
         self.view.addGestureRecognizer(downSwipe)
         
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeLeft"))
-        upSwipe.numberOfTouchesRequired = 1
-        upSwipe.direction = UISwipeGestureRecognizerDirection.Left
+        leftSwipe.numberOfTouchesRequired = 1
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(leftSwipe)
         
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: Selector("swipeRight"))
-        upSwipe.numberOfTouchesRequired = 1
-        upSwipe.direction = UISwipeGestureRecognizerDirection.Right
+        rightSwipe.numberOfTouchesRequired = 1
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(rightSwipe)
     }
     
     func swipeUp()
     {
         println("swipeUp")
+        
+        for i in 0 ..< dimension
+        {
+            for j in 0 ..< dimension
+            {
+                var row:Int = i
+                var col:Int = j
+                var key = NSIndexPath(forRow: row, inSection: col)
+                
+                if(tileVals.indexForKey(key) != nil)
+                {
+                    //如果行>1 上移一行
+                    if(row > 1)
+                    {
+                        var value = tileVals[key]
+                        println("move")
+                        removeKeyTile(key)
+                        
+                        var index = row*dimension+col - dimension
+                        row = Int(index/dimension)
+                        col = index - row*dimension
+                        insertTile((row,col), value:value!)
+                    }
+                }
+            }
+        }
     }
     
     func swipeDown()
@@ -134,6 +164,17 @@ class MainViewController:UIViewController
     func swipeRight()
     {
         println("swipeRight")
+    }
+    
+    func removeKeyTile(key:NSIndexPath)
+    {
+        var tile = tiles[key]!
+        var tileVal = tileVals[key]
+        
+        tile.removeFromSuperview()
+        tiles.removeValueForKey(key)
+        tileVals.removeValueForKey(key)
+        
     }
     
     func resetTapped()
