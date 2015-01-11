@@ -120,11 +120,38 @@ class MainViewController:UIViewController
         self.view.addGestureRecognizer(rightSwipe)
     }
     
+    func printTiles(tiles:Array<Int>)
+    {
+        var count = tiles.count
+        for var i=0; i<count; i++
+        {
+            if (i+1) % Int(dimension) == 0
+            {
+                println(tiles[i])
+            }
+            else
+            {
+                print("\(tiles[i])\t")
+            }
+            
+        }
+        println("")
+    }
+    
     func swipeUp()
     {
         println("swipeUp")
         
-        for i in 0 ..< dimension
+        gmodel.reflowUp()
+        printTiles(gmodel.tiles)
+        printTiles(gmodel.mtiles)
+        
+        resetUI()
+        
+        initUI()
+        
+        
+        /*for i in 0 ..< dimension
         {
             for j in 0 ..< dimension
             {
@@ -134,11 +161,12 @@ class MainViewController:UIViewController
                 
                 if(tileVals.indexForKey(key) != nil)
                 {
+                    println("move")
                     //如果行>1 上移一行
                     if(row > 1)
                     {
                         var value = tileVals[key]
-                        println("move")
+                        
                         removeKeyTile(key)
                         
                         var index = row*dimension+col - dimension
@@ -148,22 +176,43 @@ class MainViewController:UIViewController
                     }
                 }
             }
-        }
+        }*/
     }
     
     func swipeDown()
     {
         println("swipeDown")
+        gmodel.reflowDown()
+        printTiles(gmodel.tiles)
+        printTiles(gmodel.mtiles)
+        
+        resetUI()
+        
+        initUI()
     }
     
     func swipeLeft()
     {
         println("swipeLeft")
+        gmodel.reflowLeft()
+        printTiles(gmodel.tiles)
+        printTiles(gmodel.mtiles)
+        
+        resetUI()
+        
+        initUI()
     }
     
     func swipeRight()
     {
         println("swipeRight")
+        gmodel.reflowRigth()
+        printTiles(gmodel.tiles)
+        printTiles(gmodel.mtiles)
+        
+        resetUI()
+        
+        initUI()
     }
     
     func removeKeyTile(key:NSIndexPath)
@@ -180,11 +229,34 @@ class MainViewController:UIViewController
     func resetTapped()
     {
         println("reset")
+        resetUI()
+        gmodel.initTiles()
+    }
+    
+    func initUI()
+    {
+        for i in 0 ..< dimension
+        {
+            for j in 0 ..< dimension
+            {
+                var index = i*self.dimension + j
+                if(gmodel.tiles[index] != 0)
+                {
+                    insertTile((i,j), value: gmodel.tiles[index])
+            
+                }
+            }
+        }
+    }
+    
+    func resetUI()
+    {
         for(key, tile) in tiles
         {
             tile.removeFromSuperview()
         }
-        gmodel.initTiles()
+        tiles.removeAll(keepCapacity: true)
+        tileVals.removeAll(keepCapacity: true)
     }
     
     func genTapped()

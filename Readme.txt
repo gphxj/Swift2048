@@ -32,3 +32,41 @@ button.titleLabel.font = UIFont.systemFontOfSize(14)      //提示错误： 'UIL
 //修改为如下代码后错误消失 ？？？
 button.titleLabel?.textColor = UIColor.whiteColor()
 button.titleLabel?.font = UIFont.systemFontOfSize(14)
+
+
+2015.1.11
+
+var tiles:Array<Int>! //不明白？？？？？
+
+
+<>后不加！
+init(dimension:Int)
+{
+    self.dimension = dimension
+
+    initTiles()             //提示错误：Variable 'self.tiles' used before being initialized
+}                           //提示错误：Property 'self.tiles' not initialized
+
+<>改为<>!  后错误消失？？？？？？
+
+
+
+if (i+1) % Int(dimension) ==0       // Expected '{' after 'if' condition
+{                                   // Braced block of statements is an unused closure
+    println(tiles[i])
+}                                   // Expected expression
+else
+{                                   // Braced block of statements is an unused closure
+    print("\(tiles[i])\t")
+}
+
+// ==0 修改为 == 0 后  后错误消失？？？？？？
+
+if (i+1) % Int(dimension) == 0
+{
+    println(tiles[i])
+}
+else
+{
+    print("\(tiles[i])\t")
+}
