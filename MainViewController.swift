@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum Animation2048Type
+{
+    case None       //无动画
+    case New        //新出现动画
+    case Merge      //合并动画
+}
+
 class MainViewController:UIViewController
 {
     //游戏方格维度
@@ -24,13 +31,17 @@ class MainViewController:UIViewController
     var backgrounds:Array<UIView>
     
     //游戏数据模型
-    var gmodel:GameModel
+    var gmodel:GameModel!
     
     //保存界面上的数字Label数据
     var tiles: Dictionary<NSIndexPath, TileView>
     
     //保存实际数字值的一个字典
     var tileVals: Dictionary<NSIndexPath, Int>
+    
+    var score:ScoreView!
+    
+    var bestscore:BestScoreView!
     
     
     override init() {
@@ -41,7 +52,6 @@ class MainViewController:UIViewController
         self.tiles = Dictionary()
         self.tileVals = Dictionary()
         
-        self.gmodel = GameModel(dimension: self.dimension)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -49,13 +59,16 @@ class MainViewController:UIViewController
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         setupBackground()
         setupButtons()
         setupSwipeGuestures()
+        setupScoreLables()
+        self.gmodel = GameModel(dimension:self.dimension, score:score , bestscore: bestscore)
         
-        for i in 0 ..< 16
+        for i in 0 ..< 2
         {
             genNumber()
         }
@@ -73,6 +86,21 @@ class MainViewController:UIViewController
         btngen.frame.origin.x = 170
         btngen.frame.origin.y = 450
         self.view.addSubview(btngen)
+    }
+    
+    func setupScoreLables()
+    {
+        score = ScoreView()
+        score.frame.origin.x = 50
+        score.frame.origin.y = 80
+        score.scoreChanged(Value: 0)
+        self.view.addSubview(score)
+        
+        bestscore = BestScoreView()
+        bestscore.frame.origin.x = 170
+        bestscore.frame.origin.y = 80
+        bestscore.changeScore(value: 0)
+        self.view.addSubview(bestscore)
     }
     
     func setupBackground()
@@ -145,12 +173,15 @@ class MainViewController:UIViewController
         gmodel.reflowUp()
         gmodel.mergeUp()
         gmodel.reflowUp()
+        
         printTiles(gmodel.tiles)
         printTiles(gmodel.mtiles)
         
-        resetUI()
+//        resetUI()
         
         initUI()
+        
+        genNumber()
         
         
         /*for i in 0 ..< dimension
@@ -187,12 +218,15 @@ class MainViewController:UIViewController
         gmodel.reflowDown()
         gmodel.mergeDown()
         gmodel.reflowDown()
+        
         printTiles(gmodel.tiles)
         printTiles(gmodel.mtiles)
         
-        resetUI()
+//        resetUI()
         
         initUI()
+        
+        genNumber()
     }
     
     func swipeLeft()
@@ -201,12 +235,15 @@ class MainViewController:UIViewController
         gmodel.reflowLeft()
         gmodel.mergeLeft()
         gmodel.reflowLeft()
+        
         printTiles(gmodel.tiles)
         printTiles(gmodel.mtiles)
         
-        resetUI()
+//        resetUI()
         
         initUI()
+        
+        genNumber()
     }
     
     func swipeRight()
@@ -215,12 +252,15 @@ class MainViewController:UIViewController
         gmodel.reflowRigth()
         gmodel.mergeRight()
         gmodel.reflowRigth()
+        
         printTiles(gmodel.tiles)
         printTiles(gmodel.mtiles)
         
-        resetUI()
+//        resetUI()
         
         initUI()
+        
+        genNumber()
     }
     
     func removeKeyTile(key:NSIndexPath)
@@ -243,15 +283,45 @@ class MainViewController:UIViewController
     
     func initUI()
     {
+        var index:Int
+        var key:NSIndexPath
+        var tile:TileView
+        var tileVal:Int
+        
         for i in 0 ..< dimension
         {
             for j in 0 ..< dimension
             {
-                var index = i*self.dimension + j
-                if(gmodel.tiles[index] != 0)
+                index = i*self.dimension + j
+                key = NSIndexPath(forRow: i, inSection: j)
+                //原来界面没有值，模型数据中有值
+                if((gmodel.tiles[index] > 0) && tileVals.indexForKey(key) == nil)
                 {
-                    insertTile((i,j), value: gmodel.tiles[index])
-            
+                    insertTile((i,j), value: gmodel.tiles[index], atype: Animation2048Type.Merge)
+                }
+                //原来界面中有值，现在模型中没有值了
+                if((gmodel.tiles[index] == 0) && (tileVals.indexForKey(key) != nil))
+                {
+                    tile = tiles[key]!
+                    tile.removeFromSuperview()
+                
+                    tiles.removeValueForKey(key)
+                    tileVals.removeValueForKey(key)
+                }
+                //原来有值，但是现在还有值
+                if((gmodel.tiles[index] > 0) && (tileVals.indexForKey(key) != nil))
+                {
+                    tileVal = tileVals[key]!
+                    if(tileVal != gmodel.tiles[index])
+                    {
+                        tile = tiles[key]!
+                        tile.removeFromSuperview()
+ 
+                        tiles.removeValueForKey(key)
+                        tileVals.removeValueForKey(key)
+                        insertTile((i,j), value: gmodel.tiles[index], atype: Animation2048Type.Merge)
+
+                    }
                 }
             }
         }
@@ -296,10 +366,10 @@ class MainViewController:UIViewController
             return
         }
         
-        insertTile((row, col), value:seed)
+        insertTile((row, col), value:seed, atype: Animation2048Type.New)
     }
     
-    func insertTile(pos:(Int, Int),value:Int)
+    func insertTile(pos:(Int, Int),value:Int, atype:Animation2048Type)
     {
         let (row, col) = pos;
         
@@ -312,18 +382,33 @@ class MainViewController:UIViewController
         
         var index = NSIndexPath(forRow: row, inSection: col)
         tiles[index] = tile
+        tileVals[index] = value
         
-        UIView.animateWithDuration(1, delay: 0.1, options: UIViewAnimationOptions.TransitionNone, animations:
+        if(atype == Animation2048Type.None)
+        {
+            return
+        }
+        else if(atype == Animation2048Type.New)
+        {
+            tile.layer.setAffineTransform(CGAffineTransformMakeScale(0.1, 0.1))
+        }
+        else if(atype == Animation2048Type.Merge)
+        {
+            tile.layer.setAffineTransform(CGAffineTransformMakeScale(0.8, 0.8))
+        }
+        
+        UIView.animateWithDuration(0.3, delay: 0.1, options: UIViewAnimationOptions.TransitionNone, animations:
             {
                 () -> Void in
                     tile.layer.setAffineTransform(CGAffineTransformMakeScale(1, 1))
-            }, completion: {
+            },
+            completion: {
                 (finished:Bool) -> Void in
                 UIView.animateWithDuration(0.08, animations: {
                     () -> Void in
                     tile.layer.setAffineTransform(CGAffineTransformIdentity)
                 })
-        })
+            })
     }
 }
 

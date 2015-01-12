@@ -18,10 +18,19 @@ class GameModel
     
     var mtiles:Array<Int>!
     
-    init(dimension:Int)
+    var scoredeldgate:ScoreViewProtocol!
+    
+    var bestscoredelegage:ScoreViewProtocol!
+    
+    var score:Int = 0
+    
+    var bestscore:Int = 0
+    
+    init(dimension:Int, score:ScoreViewProtocol, bestscore:ScoreViewProtocol)
     {
         self.dimension = dimension
-        
+        self.scoredeldgate = score
+        self.bestscoredelegage = bestscore
         initTiles()
     }
     
@@ -206,6 +215,17 @@ class GameModel
         copyFromMtiles()
     }
     
+    func changeScore(s:Int)
+    {
+        score += s
+        if(bestscore < score)
+        {
+            bestscore = score
+        }
+        scoredeldgate.changeScore(value: score)
+        bestscoredelegage.changeScore(value: score)
+    }
+    
     func mergeUp()
     {
         copyToMtiles()
@@ -218,6 +238,7 @@ class GameModel
                 if(mtiles[index] > 0  && (mtiles[index-self.dimension] == mtiles[index]))
                 {
                     mtiles[index-self.dimension] = mtiles[index] * 2
+                    changeScore(mtiles[index] * 2)
                     mtiles[index] = 0
                 }
             }
@@ -237,6 +258,7 @@ class GameModel
                 if(mtiles[index] > 0  && (mtiles[index+self.dimension] == mtiles[index]))
                 {
                     mtiles[index+self.dimension] = mtiles[index] * 2
+                    changeScore(mtiles[index] * 2)
                     mtiles[index] = 0
                 }
             }
@@ -256,6 +278,7 @@ class GameModel
                 if(mtiles[index] > 0  && mtiles[index-1] == mtiles[index])
                 {
                     mtiles[index-1] = mtiles[index] * 2
+                    changeScore(mtiles[index] * 2)
                     mtiles[index] = 0
                 }
             }
@@ -275,6 +298,7 @@ class GameModel
                 if(mtiles[index] > 0  && mtiles[index+1] == mtiles[index])
                 {
                     mtiles[index] = mtiles[index] * 2
+                    changeScore(mtiles[index] * 2)
                     mtiles[index] = 0
                 }
             }
