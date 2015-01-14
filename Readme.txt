@@ -85,3 +85,5 @@ tile = tiles[key]            //提示错误： Value of optional type 'TileView?
 tile = tiles[key]！          // 修改后错误消失？？？？？？
 
 
+问题7
+calss 

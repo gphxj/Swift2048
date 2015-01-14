@@ -93,7 +93,7 @@ class MainViewController:UIViewController
         score = ScoreView()
         score.frame.origin.x = 50
         score.frame.origin.y = 80
-        score.scoreChanged(Value: 0)
+        score.changeScore(value: 0)
         self.view.addSubview(score)
         
         bestscore = BestScoreView()

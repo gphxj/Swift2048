@@ -12,7 +12,7 @@ protocol ScoreViewProtocol{
     func changeScore(value s:Int)
 }
 
-class ScoreView:UIView
+class ScoreView:UIView, ScoreViewProtocol
 {
     var label:UILabel
     
@@ -37,7 +37,7 @@ class ScoreView:UIView
         self.addSubview(label)
     }
     
-    func scoreChanged(Value s:Int)
+    func changeScore(value s: Int)
     {
         score = s
     }
@@ -55,7 +55,7 @@ class BestScoreView:ScoreView, ScoreViewProtocol
         }
     }
     
-    func changeScore(value s: Int)
+    override func changeScore(value s: Int)
     {
         bestscore = s
     }

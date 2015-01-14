@@ -297,7 +297,7 @@ class GameModel
                 index = self.dimension * i + j
                 if(mtiles[index] > 0  && mtiles[index+1] == mtiles[index])
                 {
-                    mtiles[index] = mtiles[index] * 2
+                    mtiles[index+1] = mtiles[index] * 2
                     changeScore(mtiles[index] * 2)
                     mtiles[index] = 0
                 }
