@@ -335,6 +335,8 @@ class MainViewController:UIViewController
         }
         tiles.removeAll(keepCapacity: true)
         tileVals.removeAll(keepCapacity: true)
+        
+        score.changeScore(value: 0)
     }
     
     func genTapped()
